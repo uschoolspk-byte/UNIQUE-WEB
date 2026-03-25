@@ -1,0 +1,1220 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <title>Unique School System | Excellence in Education</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #f0f8ff;
+            overflow-x: hidden;
+            width: 100%;
+        }
+
+        /* Blue & White Theme */
+        :root {
+            --primary-blue: #1a4d8c;
+            --primary-dark: #0a2f5a;
+            --secondary-blue: #2c6eae;
+            --accent-gold: #ffc107;
+            --light-bg: #f8fafc;
+            --white: #ffffff;
+        }
+
+        /* Navbar - Fully Responsive */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.08);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .nav-container {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 0.8rem 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+
+        .logo-img {
+            width: 50px;
+            height: 50px;
+            object-fit: contain;
+        }
+
+        .logo-text h1 {
+            font-size: clamp(0.9rem, 4vw, 1.3rem);
+            color: var(--primary-dark);
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        .logo-text p {
+            font-size: clamp(0.55rem, 2.5vw, 0.65rem);
+            color: #666;
+            letter-spacing: 1px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: clamp(0.8rem, 3vw, 2rem);
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--primary-dark);
+            font-weight: 500;
+            font-size: clamp(0.75rem, 3vw, 0.95rem);
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0%;
+            height: 2px;
+            background: var(--accent-gold);
+            transition: width 0.3s;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Fixed Dropdown Styles */
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-btn {
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background: white;
+            min-width: 160px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            border-radius: 12px;
+            z-index: 1001;
+            top: 35px;
+            left: 0;
+            overflow: hidden;
+            animation: fadeIn 0.2s ease;
+        }
+
+        .dropdown-content a {
+            color: var(--primary-dark);
+            padding: 12px 20px;
+            display: block;
+            font-size: 0.85rem;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+
+        .dropdown-content a:hover {
+            background: var(--light-bg);
+            color: var(--accent-gold);
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .mobile-menu {
+            display: none;
+            font-size: 1.6rem;
+            cursor: pointer;
+            color: var(--primary-blue);
+        }
+
+        /* Hero Section */
+        .hero {
+            margin-top: 70px;
+            position: relative;
+            height: 85vh;
+            min-height: 500px;
+            overflow: hidden;
+        }
+
+        .carousel-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        .carousel-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 0.8s ease-in-out;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .carousel-slide.active {
+            opacity: 1;
+        }
+
+        .slide-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(26, 77, 140, 0.85), rgba(10, 47, 90, 0.75));
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: white;
+            padding: 0 1rem;
+        }
+
+        .hero-text-wrapper {
+            min-height: 180px;
+        }
+
+        .hero-content h1 {
+            font-size: clamp(1.5rem, 6vw, 3.5rem);
+            font-weight: 800;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero-content p {
+            font-size: clamp(0.9rem, 3.5vw, 1.2rem);
+            margin-bottom: 2rem;
+            max-width: 700px;
+            text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.3);
+        }
+
+        .cta-btn {
+            background: var(--accent-gold);
+            color: var(--primary-dark);
+            padding: 12px 32px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: clamp(0.9rem, 3vw, 1rem);
+            transition: all 0.3s;
+            display: inline-block;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            border: none;
+        }
+
+        .cta-btn:hover {
+            transform: translateY(-3px);
+            background: #ffb300;
+        }
+
+        .carousel-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(5px);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            z-index: 10;
+            color: white;
+            font-size: 1.2rem;
+        }
+
+        @media (min-width: 768px) {
+            .carousel-btn {
+                width: 50px;
+                height: 50px;
+                font-size: 1.5rem;
+            }
+        }
+
+        .prev-btn {
+            left: 15px;
+        }
+
+        .next-btn {
+            right: 15px;
+        }
+
+        .dots {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+            z-index: 10;
+        }
+
+        .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .dot.active {
+            background: var(--accent-gold);
+            width: 25px;
+            border-radius: 10px;
+        }
+
+        @keyframes textSlideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-text {
+            animation: textSlideUp 0.5s ease forwards;
+        }
+
+        /* Modal Popup Styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+            z-index: 2000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            background: white;
+            max-width: 400px;
+            width: 90%;
+            border-radius: 28px;
+            overflow: hidden;
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+        }
+
+        .modal-overlay.active .modal-content {
+            transform: scale(1);
+        }
+
+        .modal-header {
+            background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
+            padding: 1.5rem;
+            text-align: center;
+            color: white;
+        }
+
+        .modal-header i {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .modal-header h3 {
+            font-size: 1.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .modal-body {
+            padding: 1.8rem;
+            text-align: center;
+        }
+
+        .whatsapp-btn {
+            background: #25D366;
+            color: white;
+            padding: 14px 24px;
+            border-radius: 50px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+            margin: 1rem 0;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .whatsapp-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(37, 211, 102, 0.4);
+        }
+
+        .school-info {
+            background: var(--light-bg);
+            padding: 1rem;
+            border-radius: 16px;
+            margin-top: 1rem;
+        }
+
+        .school-info p {
+            color: #555;
+            line-height: 1.6;
+            font-size: 0.9rem;
+        }
+
+        .school-info i {
+            color: var(--primary-blue);
+            margin-right: 8px;
+        }
+
+        .close-modal {
+            background: #e0e0e0;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 30px;
+            margin-top: 1rem;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        .close-modal:hover {
+            background: #ccc;
+        }
+
+        /* About Section */
+        .about {
+            padding: 80px 5%;
+            background: var(--white);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: clamp(1.8rem, 5vw, 2.5rem);
+            color: var(--primary-dark);
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: var(--accent-gold);
+            border-radius: 2px;
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        @media (max-width: 768px) {
+            .about-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+        }
+
+        .about-text p {
+            color: #555;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+            font-size: 1rem;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .stat-card {
+            text-align: center;
+            padding: 1.5rem;
+            background: linear-gradient(135deg, var(--light-bg), white);
+            border-radius: 20px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--primary-blue);
+        }
+
+        .about-image img {
+            width: 100%;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Programs Section */
+        .programs {
+            padding: 80px 5%;
+            background: var(--light-bg);
+        }
+
+        .programs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .program-card {
+            background: var(--white);
+            border-radius: 20px;
+            text-align: center;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s;
+        }
+
+        .program-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(26, 77, 140, 0.15);
+        }
+
+        .program-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            color: white;
+            font-size: 2rem;
+        }
+
+        .program-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.8rem;
+            color: var(--primary-dark);
+        }
+
+        .program-card p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        /* Gallery Section */
+        .gallery {
+            padding: 80px 5%;
+            background: var(--white);
+        }
+
+        .gallery-slider {
+            position: relative;
+            max-width: 1000px;
+            margin: 3rem auto;
+            overflow: hidden;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .gallery-track {
+            display: flex;
+            transition: transform 0.5s ease;
+        }
+
+        .gallery-card {
+            min-width: 100%;
+            position: relative;
+        }
+
+        .gallery-card img {
+            width: 100%;
+            height: 450px;
+            object-fit: cover;
+        }
+
+        @media (max-width: 768px) {
+            .gallery-card img {
+                height: 300px;
+            }
+        }
+
+        .gallery-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.7));
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .gallery-caption h3 {
+            font-size: 1.3rem;
+        }
+
+        .gallery-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            cursor: pointer;
+            z-index: 10;
+            color: var(--primary-blue);
+            font-size: 1.2rem;
+            transition: all 0.3s;
+        }
+
+        .gallery-btn:hover {
+            background: var(--accent-gold);
+        }
+
+        .gallery-prev {
+            left: 20px;
+        }
+
+        .gallery-next {
+            right: 20px;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--primary-dark);
+            color: white;
+            padding: 60px 5% 30px;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 3rem;
+        }
+
+        .footer-col h3 {
+            margin-bottom: 1.2rem;
+            font-size: 1.2rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .footer-col h3::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background: var(--accent-gold);
+        }
+
+        .footer-col p,
+        .footer-col a {
+            color: #ccc;
+            line-height: 1.8;
+            text-decoration: none;
+            display: block;
+            transition: color 0.3s;
+        }
+
+        .footer-col a:hover {
+            color: var(--accent-gold);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-links a {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+
+        .social-links a:hover {
+            background: var(--accent-gold);
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 3rem;
+            margin-top: 3rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #aaa;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .mobile-menu {
+                display: block;
+            }
+
+            .nav-links.active {
+                display: flex;
+                flex-direction: column;
+                position: absolute;
+                top: 70px;
+                left: 0;
+                width: 100%;
+                background: white;
+                padding: 1.5rem;
+                box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+                gap: 1rem;
+                z-index: 999;
+            }
+
+            .dropdown-content {
+                position: relative;
+                top: 0;
+                box-shadow: none;
+                background: var(--light-bg);
+                margin-top: 0.5rem;
+                width: 100%;
+            }
+
+            .dropdown .dropdown-content {
+                display: none;
+            }
+
+            .dropdown.active .dropdown-content {
+                display: block;
+            }
+        }
+
+        .scroll-reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+
+        .scroll-reveal.revealed {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <img src="logo.png" alt="USS Logo" class="logo-img" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'50\' height=\'50\' viewBox=\'0 0 100 100\'%3E%3Crect width=\'100\' height=\'100\' fill=\'%231a4d8c\'/%3E%3Ctext x=\'50\' y=\'68\' font-size=\'40\' text-anchor=\'middle\' fill=\'white\' font-weight=\'bold\'%3EUSS%3C/text%3E%3C/svg%3E'">
+                <div class="logo-text">
+                    <h1>UNIQUE SCHOOL SYSTEM</h1>
+                    <p>Excellence in Education</p>
+                </div>
+            </div>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#programs">Programs</a></li>
+                <li><a href="#gallery">Gallery</a></li>
+                <li class="dropdown" id="dropdownMenu">
+                    <a href="#" class="dropdown-btn" id="dropdownBtn">Announcements <i class="fas fa-chevron-down"></i></a>
+                    <div class="dropdown-content" id="dropdownContent">
+                        <a href="#" id="resultAnnouncement">📊 Result 2025</a>
+                    </div>
+                </li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <div class="mobile-menu" id="mobileMenu">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Carousel -->
+    <section id="home" class="hero">
+        <div class="carousel-container">
+            <div class="carousel-slide active" style="background-image: url('https://images.pexels.com/photos/256468/pexels-photo-256468.jpeg?auto=compress&cs=tinysrgb&w=1600');">
+                <div class="slide-overlay"></div>
+            </div>
+            <div class="carousel-slide" style="background-image: url('https://images.pexels.com/photos/5212345/pexels-photo-5212345.jpeg?auto=compress&cs=tinysrgb&w=1600');">
+                <div class="slide-overlay"></div>
+            </div>
+            <div class="carousel-slide" style="background-image: url('https://images.pexels.com/photos/5427988/pexels-photo-5427988.jpeg?auto=compress&cs=tinysrgb&w=1600');">
+                <div class="slide-overlay"></div>
+            </div>
+            <div class="carousel-slide" style="background-image: url('https://images.pexels.com/photos/8613083/pexels-photo-8613083.jpeg?auto=compress&cs=tinysrgb&w=1600');">
+                <div class="slide-overlay"></div>
+            </div>
+            <div class="hero-content">
+                <div class="hero-text-wrapper">
+                    <h1 id="dynamicTitle">Nurturing Tomorrow's Leaders</h1>
+                    <p id="dynamicDesc">Empowering minds with knowledge, values, and innovation since 1995</p>
+                </div>
+                <button class="cta-btn" id="enrollNowBtn">Enroll Now <i class="fas fa-arrow-right"></i></button>
+            </div>
+            <button class="carousel-btn prev-btn"><i class="fas fa-chevron-left"></i></button>
+            <button class="carousel-btn next-btn"><i class="fas fa-chevron-right"></i></button>
+            <div class="dots"></div>
+        </div>
+    </section>
+
+    <!-- Modal Popup -->
+    <div class="modal-overlay" id="enrollModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <i class="fab fa-whatsapp"></i>
+                <h3>Contact Us</h3>
+            </div>
+            <div class="modal-body">
+                <p style="margin-bottom: 1rem; color: #333;">📞 <strong>Contact on WhatsApp:</strong></p>
+                <a href="https://wa.me/923445153406?text=Hello%21%20I%27m%20interested%20in%20admission%20at%20Unique%20School%20System" class="whatsapp-btn" target="_blank">
+                    <i class="fab fa-whatsapp"></i> +92 344 5153406
+                </a>
+                <div class="school-info">
+                    <p><i class="fas fa-map-marker-alt"></i> <strong>Visit School for More Inquiry</strong></p>
+                    <p>Main Lehtrar Road, Punigran<br>Islamabad, Pakistan</p>
+                </div>
+                <button class="close-modal" onclick="closeModal()">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- About Section -->
+    <section id="about" class="about scroll-reveal">
+        <div class="container">
+            <h2 class="section-title">About Our Institution</h2>
+            <div class="about-grid">
+                <div class="about-text">
+                    <p>Unique School System is a premier educational institution dedicated to providing quality education that combines traditional values with modern teaching methodologies. Our mission is to create a nurturing environment where every student can discover their unique potential.</p>
+                    <p>With state-of-the-art facilities, experienced faculty, and a holistic approach to education, we prepare students not just for exams, but for life. We believe in fostering critical thinking, creativity, and character development alongside academic excellence.</p>
+                    <div class="stats">
+                        <div class="stat-card">
+                            <div class="stat-number">15+</div>
+                            <div>Years of Excellence</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">200+</div>
+                            <div>Happy Students</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">20+</div>
+                            <div>Expert Faculty</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="about-image">
+                    <img src="u.png" alt="School Campus" onerror="this.src='https://images.pexels.com/photos/5212704/pexels-photo-5212704.jpeg?auto=compress&cs=tinysrgb&w=800'">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Programs Section -->
+    <section id="programs" class="programs scroll-reveal">
+        <div class="container">
+            <h2 class="section-title">Our Academic Programs</h2>
+            <div class="programs-grid">
+                <div class="program-card">
+                    <div class="program-icon"><i class="fas fa-child"></i></div>
+                    <h3>Early Years (Pre-School)</h3>
+                    <p>Nurturing young minds through play-based learning and foundational development in a safe, caring environment.</p>
+                </div>
+                <div class="program-card">
+                    <div class="program-icon"><i class="fas fa-book-open"></i></div>
+                    <h3>Primary School (1-5)</h3>
+                    <p>Building strong academic foundations with interactive and engaging curriculum that sparks curiosity.</p>
+                </div>
+                <div class="program-card">
+                    <div class="program-icon"><i class="fas fa-flask"></i></div>
+                    <h3>Middle School (6-8)</h3>
+                    <p>Developing critical thinking and exploring diverse subjects with hands-on learning and experiments.</p>
+                </div>
+                <div class="program-card">
+                    <div class="program-icon"><i class="fas fa-graduation-cap"></i></div>
+                    <h3>High School (9-12)</h3>
+                    <p>Preparing for board exams and future careers with specialized streams and career counseling.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section id="gallery" class="gallery scroll-reveal">
+        <div class="container">
+            <h2 class="section-title">Campus Moments</h2>
+            <div class="gallery-slider">
+                <div class="gallery-track" id="galleryTrack">
+                    <div class="gallery-card">
+                        <img src="https://tse1.explicit.bing.net/th/id/OIP.Yaqd86c-eT55QduI8E4hMwHaFj?rs=1&pid=ImgDetMain&o=7&rm=3" alt="Students Playing">
+                        <div class="gallery-caption">
+                            <h3>Happy Learning Environment</h3>
+                        </div>
+                    </div>
+                    <div class="gallery-card">
+                        <img src="https://images.pexels.com/photos/301926/pexels-photo-301926.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Library">
+                        <div class="gallery-caption">
+                            <h3>Modern Library Resources</h3>
+                        </div>
+                    </div>
+                    <div class="gallery-card">
+                        <img src="https://th.bing.com/th?q=School+Campus+Ppt+Background&w=120&h=120&c=1&rs=1&qlt=70&o=7&cb=1&dpr=1.5&pid=InlineBlock&rm=3&mkt=en-WW&cc=PK&setlang=en&adlt=moderate&t=1&mw=247" alt="Science Lab">
+                        <div class="gallery-caption">
+                            <h3>Advanced Labs</h3>
+                        </div>
+                    </div>
+                    <div class="gallery-card">
+                        <img src="https://images.pexels.com/photos/5428000/pexels-photo-5428000.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Sports">
+                        <div class="gallery-caption">
+                            <h3>Sports Excellence</h3>
+                        </div>
+                    </div>
+                </div>
+                <button class="gallery-btn gallery-prev"><i class="fas fa-chevron-left"></i></button>
+                <button class="gallery-btn gallery-next"><i class="fas fa-chevron-right"></i></button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact" class="footer">
+        <div class="footer-content">
+            <div class="footer-col">
+                <h3>Unique School System</h3>
+                <p>Main Lehtrar Road, Punigran<br>Islamabad, Pakistan</p>
+                <p><i class="fas fa-phone"></i> +92 344 5153406</p>
+                <p><i class="fas fa-envelope"></i> uschools.pk@gmail.com</p>
+            </div>
+            <div class="footer-col">
+                <h3>Quick Links</h3>
+                <p><a href="#home">Home</a></p>
+                <p><a href="#about">About Us</a></p>
+                <p><a href="#programs">Programs</a></p>
+                <p><a href="#gallery">Gallery</a></p>
+                <p><a href="#contact">Contact</a></p>
+            </div>
+            <div class="footer-col">
+                <h3>Connect With Us</h3>
+                <div class="social-links">
+                    <a href="https://www.facebook.com/Uniqueschoolsystem1/"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://www.tiktok.com/@uschools.pk"><i class="fab fa-tiktok"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+                <p style="margin-top: 1rem;">Follow us for updates and events</p>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2025 Unique School System. All Rights Reserved. | Empowering Minds, Shaping Futures</p>
+        </div>
+    </footer>
+
+    <script>
+        // Modal Functions
+        const modal = document.getElementById('enrollModal');
+        const enrollBtn = document.getElementById('enrollNowBtn');
+
+        function openModal() {
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        enrollBtn.addEventListener('click', openModal);
+
+        // Close modal when clicking outside
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                closeModal();
+            }
+        });
+
+        // Close on escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && modal.classList.contains('active')) {
+                closeModal();
+            }
+        });
+
+        // Carousel Data
+        const slidesData = [{
+                title: "Nurturing Tomorrow's Leaders",
+                desc: "Empowering minds with knowledge, values, and innovation since 1995"
+            },
+            {
+                title: "Excellence in Education",
+                desc: "State-of-the-art facilities and experienced faculty guiding young minds"
+            },
+            {
+                title: "Holistic Development",
+                desc: "Academic brilliance combined with character building & co-curricular activities"
+            },
+            {
+                title: "Global Perspectives",
+                desc: "Preparing students for a rapidly changing world with modern methodologies"
+            }
+        ];
+
+        const slides = document.querySelectorAll('.carousel-slide');
+        const prevBtn = document.querySelector('.prev-btn');
+        const nextBtn = document.querySelector('.next-btn');
+        const dotsContainer = document.querySelector('.dots');
+        const dynamicTitle = document.getElementById('dynamicTitle');
+        const dynamicDesc = document.getElementById('dynamicDesc');
+        let currentSlide = 0;
+        let autoInterval;
+
+        function animateTextChange(newTitle, newDesc) {
+            dynamicTitle.classList.remove('animate-text');
+            dynamicDesc.classList.remove('animate-text');
+            void dynamicTitle.offsetWidth;
+            dynamicTitle.textContent = newTitle;
+            dynamicDesc.textContent = newDesc;
+            dynamicTitle.classList.add('animate-text');
+            dynamicDesc.classList.add('animate-text');
+        }
+
+        function createDots() {
+            slides.forEach((_, index) => {
+                const dot = document.createElement('div');
+                dot.classList.add('dot');
+                if (index === 0) dot.classList.add('active');
+                dot.addEventListener('click', () => goToSlide(index));
+                dotsContainer.appendChild(dot);
+            });
+        }
+
+        function updateDots() {
+            document.querySelectorAll('.dot').forEach((dot, idx) => {
+                dot.classList.toggle('active', idx === currentSlide);
+            });
+        }
+
+        function goToSlide(index) {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (index + slides.length) % slides.length;
+            slides[currentSlide].classList.add('active');
+            const slideData = slidesData[currentSlide % slidesData.length];
+            animateTextChange(slideData.title, slideData.desc);
+            updateDots();
+            resetAutoPlay();
+        }
+
+        function nextSlide() {
+            goToSlide(currentSlide + 1);
+        }
+
+        function prevSlide() {
+            goToSlide(currentSlide - 1);
+        }
+
+        function resetAutoPlay() {
+            if (autoInterval) clearInterval(autoInterval);
+            autoInterval = setInterval(nextSlide, 3500);
+        }
+
+        createDots();
+        nextBtn.addEventListener('click', nextSlide);
+        prevBtn.addEventListener('click', prevSlide);
+        resetAutoPlay();
+
+        // Gallery Carousel
+        const track = document.getElementById('galleryTrack');
+        const galleryPrev = document.querySelector('.gallery-prev');
+        const galleryNext = document.querySelector('.gallery-next');
+        let galleryIndex = 0;
+        const galleryItems = document.querySelectorAll('.gallery-card');
+        const totalItems = galleryItems.length;
+
+        function updateGallery() {
+            track.style.transform = `translateX(-${galleryIndex * 100}%)`;
+        }
+
+        function galleryNextSlide() {
+            galleryIndex = (galleryIndex + 1) % totalItems;
+            updateGallery();
+        }
+
+        function galleryPrevSlide() {
+            galleryIndex = (galleryIndex - 1 + totalItems) % totalItems;
+            updateGallery();
+        }
+
+        galleryNext.addEventListener('click', galleryNextSlide);
+        galleryPrev.addEventListener('click', galleryPrevSlide);
+        setInterval(galleryNextSlide, 5000);
+
+        // Announcement Redirect
+        const resultLink = document.getElementById('resultAnnouncement');
+        if (resultLink) {
+            resultLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                window.open('https://url-shortener.me/IG4Z', '_blank');
+            });
+        }
+
+        // Scroll Reveal
+        const revealElements = document.querySelectorAll('.scroll-reveal');
+
+        function checkReveal() {
+            revealElements.forEach(el => {
+                const rect = el.getBoundingClientRect();
+                if (rect.top < window.innerHeight - 100) {
+                    el.classList.add('revealed');
+                }
+            });
+        }
+        window.addEventListener('scroll', checkReveal);
+        window.addEventListener('load', checkReveal);
+
+        // Mobile Menu
+        const mobileBtn = document.getElementById('mobileMenu');
+        const navLinks = document.getElementById('navLinks');
+        const dropdownMenu = document.getElementById('dropdownMenu');
+
+        mobileBtn.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+
+        // Mobile dropdown toggle
+        if (window.innerWidth <= 768) {
+            const dropdownBtn = document.getElementById('dropdownBtn');
+            dropdownBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                dropdownMenu.classList.toggle('active');
+            });
+        }
+
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                const target = document.querySelector(targetId);
+                if (target) {
+                    e.preventDefault();
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                    navLinks.classList.remove('active');
+                }
+            });
+        });
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.style.boxShadow = '0 4px 20px rgba(0,0,0,0.1)';
+            } else {
+                navbar.style.boxShadow = '0 2px 20px rgba(0,0,0,0.08)';
+            }
+        });
+    </script>
+</body>
+
+</html>
